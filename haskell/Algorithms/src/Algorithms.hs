@@ -70,7 +70,7 @@ grahamScan (a:xs) =
             where   scan (s:ss) [] = s : ss
                     scan (s:ss) (x:xs)
                         | isLeft (head (getDirections [top, nextToTop, x]))    = scan (push x (s:ss)) xs
-                        | otherwise                                            = scan nextToLastRemoved (x:xs)
+                        | otherwise                                            = scan lastRemoved (x:xs)
                             where   top                 = last (s:ss)
                                     nextToTop           = last (pop (s:ss))
-                                    nextToLastRemoved   = pop (s:ss)
+                                    lastRemoved         = pop (s:ss)
