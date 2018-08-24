@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Geometry\" />
+    <Folder Include="Geometry\Planar\" />
+    <Folder Include="Geometry\Planar\Models\" />
+    <Folder Include="Geometry\Planar\Algorithms\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Geometry\Planar\PlanarCoordinateConstants.cs" />
+    <Compile Remove="Class1.cs" />
+    <Compile Remove="Geometry\Planar\PlanarCoordinateTransforms.cs" />
+  </ItemGroup>
+</Project>

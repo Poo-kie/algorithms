@@ -54,15 +54,15 @@ sortByAngleAscWithHead (lp:as) =
                                             cosOfAngle v = dotProduct rv v / (magnitude rv * magnitude v)
 
 
-pop = init
-push x xs = xs ++ [x]
+pop = tail
+push x xs = x : xs
 
 grahamScan (a:xs) =
     let sortedPoints = sortByAngleAscWithHead (swapHeadWithLowestPoint (a:xs))
         p1 = head sortedPoints
         p2 = head (tail sortedPoints)
         p3 = head (tail (tail sortedPoints))
-        stack = [p1, p2, p3]
+        stack = [p3, p2, p1]
         remainingItems = snd (splitAt 3 sortedPoints)
     in if null remainingItems
         then stack
@@ -70,7 +70,7 @@ grahamScan (a:xs) =
             where   scan (s:ss) [] = s : ss
                     scan (s:ss) (x:xs)
                         | isLeft (head (getDirections [top, nextToTop, x]))    = scan (push x (s:ss)) xs
-                        | otherwise                                            = scan lastRemoved (x:xs)
-                            where   top                 = last (s:ss)
-                                    nextToTop           = last (pop (s:ss))
-                                    lastRemoved         = pop (s:ss)
+                        | otherwise                                            = scan poppedStack (x:xs)
+                            where   top                 = head (s:ss)
+                                    nextToTop           = head (pop (s:ss))
+                                    poppedStack         = pop (s:ss)
