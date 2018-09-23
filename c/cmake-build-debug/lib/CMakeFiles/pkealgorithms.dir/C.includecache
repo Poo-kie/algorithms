@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/pookie/Projects/algorithms/c/lib/data_structures.c
+stdlib.h
+-
+string.h
+-
+data_structures.h
+/Users/pookie/Projects/algorithms/c/lib/data_structures.h
+
+/Users/pookie/Projects/algorithms/c/lib/data_structures.h
+

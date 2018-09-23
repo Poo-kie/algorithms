@@ -1,0 +1,32 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../lib/algorithms.h
+math.h
+-
+
+/Users/pookie/Projects/algorithms/c/data_structure_tests/data_structure_tests.c
+../dependencies/munit/munit.h
+/Users/pookie/Projects/algorithms/c/dependencies/munit/munit.h
+algorithms.h
+/Users/pookie/Projects/algorithms/c/data_structure_tests/algorithms.h
+
+/Users/pookie/Projects/algorithms/c/dependencies/munit/munit.h
+stdarg.h
+-
+stdlib.h
+-
+stdint.h
+-
+inttypes.h
+-
+stdbool.h
+-
+string.h
+-
+
