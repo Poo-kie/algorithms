@@ -6,15 +6,11 @@
 
 #IncludeRegexTransform: 
 
-../lib/algorithms.h
-math.h
--
-
 /Users/pookie/Projects/algorithms/c/data_structure_tests/data_structure_tests.c
 ../dependencies/munit/munit.h
 /Users/pookie/Projects/algorithms/c/dependencies/munit/munit.h
-algorithms.h
-/Users/pookie/Projects/algorithms/c/data_structure_tests/algorithms.h
+../lib/data_structures.h
+/Users/pookie/Projects/algorithms/c/lib/data_structures.h
 
 /Users/pookie/Projects/algorithms/c/dependencies/munit/munit.h
 stdarg.h
@@ -29,4 +25,6 @@ stdbool.h
 -
 string.h
 -
+
+/Users/pookie/Projects/algorithms/c/lib/data_structures.h
 

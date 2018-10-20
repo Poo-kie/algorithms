@@ -7,12 +7,12 @@
 #IncludeRegexTransform: 
 
 /Users/pookie/Projects/algorithms/c/algorithm_tests/algorithm_tests.c
-munit/munit.h
-/Users/pookie/Projects/algorithms/c/algorithm_tests/munit/munit.h
+../dependencies/munit/munit.h
+/Users/pookie/Projects/algorithms/c/dependencies/munit/munit.h
 ../lib/algorithms.h
 /Users/pookie/Projects/algorithms/c/lib/algorithms.h
 
-/Users/pookie/Projects/algorithms/c/algorithm_tests/munit/munit.c
+/Users/pookie/Projects/algorithms/c/dependencies/munit/munit.c
 stdbool.h
 -
 limits.h
@@ -50,9 +50,9 @@ io.h
 fcntl.h
 -
 munit.h
-/Users/pookie/Projects/algorithms/c/algorithm_tests/munit/munit.h
+/Users/pookie/Projects/algorithms/c/dependencies/munit/munit.h
 ../exact-int/exact-int.h
-/Users/pookie/Projects/algorithms/c/algorithm_tests/exact-int/exact-int.h
+/Users/pookie/Projects/algorithms/c/dependencies/exact-int/exact-int.h
 assert.h
 -
 limits.h
@@ -82,7 +82,7 @@ time.h
 stdatomic.h
 -
 
-/Users/pookie/Projects/algorithms/c/algorithm_tests/munit/munit.h
+/Users/pookie/Projects/algorithms/c/dependencies/munit/munit.h
 stdarg.h
 -
 stdlib.h

@@ -7,7 +7,7 @@
 //
 
 #include "../dependencies/munit/munit.h"
-#include "algorithms.h"
+#include "../lib/data_structures.h"
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-parameter"
@@ -21,129 +21,127 @@
     NULL /* parameters */ \
 }
 
+// we don't need to malloc each element
+// to unit test here.  we just make sure
+// the elements are all set to NULL
+void destroy(void *data) {
+    data = NULL;
+}
+
 // this file is going to get big.. but it's better than having to search through n files to find anything
 // and have those do includes to use macros and such.  just add new test cases from the top
 
-static MunitResult CROSS_PRODUCT_DIRECTION_should_return_LEFT_if_value_is_positive(const MunitParameter params[], void *fixture)
-{
-    coordinate_t c1 = { .x = 2, .y = 2};
-    coordinate_t c2 = { .x = 5, .y = 6};
-    coordinate_t c3 = { .x = 4, .y = 7};
+static MunitResult dlist_init_should_initialize_list_with_expected_default_values(const MunitParameter params[], void *fixture) {
+    dlist_t *list = (dlist_t *) malloc(sizeof(dlist_t));
 
-    double crossProduct = 7.0;
+    dlist_init(list, destroy);
 
-    munit_assert_double_equal(crossProduct, CROSS_PRODUCT(c1, c2, c3), 6);          // value is positive
-    munit_assert_int((int)LEFT, ==, (int)CROSS_PRODUCT_DIRECTION(crossProduct));    // returns left
+    munit_assert_int(dlist_size(list), ==, 0);
+    munit_assert_ptr(list->destroy, ==, destroy);
+    munit_assert_ptr(list->head, ==, NULL);
+    munit_assert_ptr(list->tail, ==, NULL);
 
-    return MUNIT_OK;
-}
-
-static MunitResult CROSS_PRODUCT_DIRECTION_should_return_RIGHT_if_value_is_negative(const MunitParameter params[], void *fixture)
-{
-    coordinate_t c1 = { .x = 2, .y = 2};
-    coordinate_t c2 = { .x = 5, .y = 6};
-    coordinate_t c3 = { .x = 9, .y = 3};
-
-    double crossProduct = -25.0;
-
-    munit_assert_double_equal(crossProduct, CROSS_PRODUCT(c1, c2, c3), 6);          // value is negative
-    munit_assert_int((int)RIGHT, ==, (int)CROSS_PRODUCT_DIRECTION(crossProduct));   // returns right
+    free(list);
 
     return MUNIT_OK;
 }
 
-static MunitResult CROSS_PRODUCT_DIRECTION_should_return_STRAIGHT_if_value_is_zero(const MunitParameter params[], void *fixture)
-{
-    coordinate_t c1 = { .x = 2, .y = 2};
-    coordinate_t c2 = { .x = 4, .y = 4};
-    coordinate_t c3 = { .x = 6, .y = 6};
+static MunitResult dlist_ins_next_should_insert_new_element_at_head_and_tail_for_empty_list(const MunitParameter params[], void *fixture) {
+    dlist_t *list = (dlist_t *) malloc(sizeof(dlist_t));
 
-    double crossProduct = 0.0;
+    dlist_init(list, destroy);
 
-    munit_assert_double_equal(crossProduct, CROSS_PRODUCT(c1, c2, c3), 6);              // value is zero
-    munit_assert_int((int)STRAIGHT, ==, (int)CROSS_PRODUCT_DIRECTION(crossProduct));    // returns straight
+    char *test = "test";
 
-    return MUNIT_OK;
-}
+    dlist_ins_next(list, NULL, test);
 
-static MunitResult CROSS_PRODUCT_should_return_cross_product_of_specified_coordinates(const MunitParameter params[], void *fixture)
-{
-    coordinate_t c1 = { .x = 2, .y = 2};
-    coordinate_t c2 = { .x = 5, .y = 6};
-    coordinate_t c3 = { .x = 4, .y = 7};
+    munit_assert_ptr(list->head->data, ==, test);
+    munit_assert_ptr(list->tail->data, ==, test);
+    munit_assert_string_equal(dlist_head(list)->data, "test");
+    munit_assert_string_equal(dlist_tail(list)->data, "test");
 
-    double crossProduct = 7.0;
-
-    munit_assert_double_equal(crossProduct, CROSS_PRODUCT(c1, c2, c3), 6);
+    free(list);
 
     return MUNIT_OK;
 }
 
-static MunitResult VECTOR_X_should_return_x_value_as_difference_of_x_coordinates(const MunitParameter params[], void *fixture) {
-    coordinate_t c1 = { .x = -2, .y = 31};
-    coordinate_t c2 = { .x = 7, .y = 25};
+static MunitResult dlist_ins_next_should_insert_new_element_at_tail_when_ins_after_current_tail(const MunitParameter params[], void *fixture) {
+    dlist_t *list = (dlist_t *) malloc(sizeof(dlist_t));
 
-    vector_t v = { .a = c1, .b = c2 };
+    dlist_init(list, destroy);
 
-    double vx = 9.0;
+    char *test = "test";
+    char *test2 = "test2";
 
-    munit_assert_double_equal(vx, VECTOR_X(v), 6);
+    dlist_ins_next(list, NULL, test);
+    dlist_ins_next(list, dlist_tail(list), test2);
 
-    return MUNIT_OK;
-}
+    munit_assert_ptr(list->head->data, ==, test);
+    munit_assert_ptr(list->tail->data, ==, test2);
+    munit_assert_string_equal(dlist_head(list)->data, "test");
+    munit_assert_string_equal(dlist_tail(list)->data, "test2");
 
-static MunitResult VECTOR_Y_should_return_y_value_as_difference_of_y_coordinates(const MunitParameter params[], void *fixture) {
-    coordinate_t c1 = { .x = -2, .y = 31};
-    coordinate_t c2 = { .x = 7, .y = 25};
-
-    vector_t v = { .a = c1, .b = c2 };
-
-    double vy = -6.0;
-
-    munit_assert_double_equal(vy, VECTOR_Y(v), 6);
+    free(list);
 
     return MUNIT_OK;
 }
 
-static MunitResult VECTOR_MAGNITUDE_should_return_magnitude_of_x_and_y_values(const MunitParameter params[], void *fixture) {
-    coordinate_t c1 = { .x = 2, .y = 2};
-    coordinate_t c2 = { .x = 5, .y = 6};
+static MunitResult dlist_ins_next_should_insert_new_element_between_head_and_tail_when_ins_after_current_head(const MunitParameter *params, void *fixture) {
+    dlist_t *list = (dlist_t *) malloc(sizeof(dlist_t));
 
-    vector_t v = { .a = c1, .b = c2 };
+    dlist_init(list, destroy);
 
-    double magnitude = 5.0;
+    char *test = "test";
+    char *test2 = "test2";
+    char *test3 = "test3";
 
-    munit_assert_double_equal(magnitude, VECTOR_MAGNITUDE(v), 6);
+    int retval1 = dlist_ins_next(list, NULL, test);
+    int retval2 = dlist_ins_next(list, dlist_tail(list), test2);
+    int retval3 = dlist_ins_next(list, dlist_head(list), test3);
+
+    munit_assert_int(retval1, ==, 0);
+    munit_assert_int(retval2, ==, 0);
+    munit_assert_int(retval3, ==, 0);
+
+    munit_assert_ptr(list->head->data, ==, test);
+    munit_assert_ptr(list->head->next->data, ==, test3);
+    munit_assert_ptr(list->tail->data, ==, test2);
+    munit_assert_string_equal(dlist_head(list)->data, "test");
+    munit_assert_string_equal(dlist_head(list)->next->data, "test3");
+    munit_assert_string_equal(dlist_tail(list)->data, "test2");
+
+    return MUNIT_OK;
+}
+
+static MunitResult dlist_destroy_should_free_list_and_zero_allocated_memory(
+        const MunitParameter *params, void *fixture) {
+    dlist_t *list = (dlist_t *) malloc(sizeof(dlist_t));
+
+    dlist_init(list, destroy);
+
+    char *test = "test";
+    char *test2 = "test2";
+    char *test3 = "test3";
+
+    dlist_ins_next(list, NULL, test);
+    dlist_ins_next(list, dlist_tail(list), test2);
+    dlist_ins_next(list, dlist_head(list), test3);
+
+    dlist_destroy(list);
+
+    int *freedList = (int *)list;
+    munit_assert_int(*freedList, ==, 0);
 
     return MUNIT_OK;
 }
 
-static MunitResult DOT_PRODUCT_should_return_dot_product_of_specified_vectors(const MunitParameter params[], void *fixture)
-{
-    coordinate_t c1 = { .x = 2, .y = 2};
-    coordinate_t c2 = { .x = 5, .y = 6};
-    coordinate_t c3 = { .x = 2, .y = 2};
-    coordinate_t c4 = { .x = 5, .y = 6};
-
-    vector_t v = { .a = c1, .b = c2 };
-    vector_t v2 = { .a = c3, .b = c4 };
-
-    double dotProduct = 25.0;
-
-    munit_assert_double_equal(dotProduct, DOT_PRODUCT(v, v2), 6);
-
-    return MUNIT_OK;
-}
 
 static MunitTest tests[] = {
-        TESTCASE(VECTOR_X_should_return_x_value_as_difference_of_x_coordinates),
-        TESTCASE(VECTOR_Y_should_return_y_value_as_difference_of_y_coordinates),
-        TESTCASE(VECTOR_MAGNITUDE_should_return_magnitude_of_x_and_y_values),
-        TESTCASE(DOT_PRODUCT_should_return_dot_product_of_specified_vectors),
-        TESTCASE(CROSS_PRODUCT_should_return_cross_product_of_specified_coordinates),
-        TESTCASE(CROSS_PRODUCT_DIRECTION_should_return_LEFT_if_value_is_positive),
-        TESTCASE(CROSS_PRODUCT_DIRECTION_should_return_RIGHT_if_value_is_negative),
-        TESTCASE(CROSS_PRODUCT_DIRECTION_should_return_STRAIGHT_if_value_is_zero),
+        TESTCASE(dlist_init_should_initialize_list_with_expected_default_values),
+        TESTCASE(dlist_ins_next_should_insert_new_element_at_head_and_tail_for_empty_list),
+        TESTCASE(dlist_ins_next_should_insert_new_element_at_tail_when_ins_after_current_tail),
+        TESTCASE(dlist_ins_next_should_insert_new_element_between_head_and_tail_when_ins_after_current_head),
+        TESTCASE(dlist_destroy_should_free_list_and_zero_allocated_memory),
         /* Mark the end of the array with an entry where the test
          * function is NULL */
         { NULL, NULL, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL }

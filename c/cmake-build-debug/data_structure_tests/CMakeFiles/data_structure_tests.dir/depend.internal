@@ -5,6 +5,6 @@ data_structure_tests/CMakeFiles/data_structure_tests.dir/__/dependencies/munit/m
  /Users/pookie/Projects/algorithms/c/dependencies/munit/munit.c
  /Users/pookie/Projects/algorithms/c/dependencies/munit/munit.h
 data_structure_tests/CMakeFiles/data_structure_tests.dir/data_structure_tests.c.o
- ../lib/algorithms.h
  /Users/pookie/Projects/algorithms/c/data_structure_tests/data_structure_tests.c
  /Users/pookie/Projects/algorithms/c/dependencies/munit/munit.h
+ /Users/pookie/Projects/algorithms/c/lib/data_structures.h

@@ -4,7 +4,7 @@
 data_structure_tests/CMakeFiles/data_structure_tests.dir/__/dependencies/munit/munit.c.o: ../dependencies/munit/munit.c
 data_structure_tests/CMakeFiles/data_structure_tests.dir/__/dependencies/munit/munit.c.o: ../dependencies/munit/munit.h
 
-data_structure_tests/CMakeFiles/data_structure_tests.dir/data_structure_tests.c.o: ../lib/algorithms.h
 data_structure_tests/CMakeFiles/data_structure_tests.dir/data_structure_tests.c.o: ../data_structure_tests/data_structure_tests.c
 data_structure_tests/CMakeFiles/data_structure_tests.dir/data_structure_tests.c.o: ../dependencies/munit/munit.h
+data_structure_tests/CMakeFiles/data_structure_tests.dir/data_structure_tests.c.o: ../lib/data_structures.h
 
