@@ -110,3 +110,40 @@ int dlist_ins_next(dlist_t *list, dlist_el_t *element, const void *data) {
 
     return 0;
 }
+
+/**
+ *
+ * @param list
+ * @param element
+ * @param data
+ * @return
+ */
+int dlist_ins_prev(dlist_t *list, dlist_el_t *element, const void *data) {
+    dlist_el_t *new_element;
+
+    if (element == NULL && dlist_size(list) != 0) return -1;
+
+    if ((new_element = (dlist_el_t*)malloc(sizeof(dlist_el_t))) == NULL) return -1;
+
+    new_element->data = (void*)data;
+
+    if (dlist_size(list) == 0) {
+        list->head = new_element;
+        list->head->prev = NULL;
+        list->head->next = NULL;
+        list->tail = new_element;
+    }
+    else {
+        new_element->next = element;
+        new_element->prev = element->prev;
+
+        if (element->prev == NULL) list->head = new_element;
+        else element->prev->next = new_element;
+
+        element->prev = new_element;
+    }
+
+    list->size++;
+
+    return 0;
+}

@@ -86,6 +86,27 @@ static MunitResult dlist_ins_next_should_insert_new_element_at_tail_when_ins_aft
     return MUNIT_OK;
 }
 
+static MunitResult dlist_ins_prev_should_insert_new_element_at_head_when_inserted_before_head(const MunitParameter params[], void *fixture) {
+    dlist_t *list = (dlist_t *) malloc(sizeof(dlist_t));
+
+    dlist_init(list, destroy);
+
+    char *test = "test";
+    char *test2 = "test2";
+
+    dlist_ins_prev(list, NULL, test);
+    dlist_ins_prev(list, dlist_tail(list), test2);
+
+    munit_assert_ptr(list->head->data, ==, test2);
+    munit_assert_ptr(list->tail->data, ==, test);
+    munit_assert_string_equal(dlist_head(list)->data, "test2");
+    munit_assert_string_equal(dlist_tail(list)->data, "test");
+
+    free(list);
+
+    return MUNIT_OK;
+}
+
 static MunitResult dlist_ins_next_should_insert_new_element_between_head_and_tail_when_ins_after_current_head(const MunitParameter *params, void *fixture) {
     dlist_t *list = (dlist_t *) malloc(sizeof(dlist_t));
 
@@ -142,6 +163,7 @@ static MunitTest tests[] = {
         TESTCASE(dlist_ins_next_should_insert_new_element_at_tail_when_ins_after_current_tail),
         TESTCASE(dlist_ins_next_should_insert_new_element_between_head_and_tail_when_ins_after_current_head),
         TESTCASE(dlist_destroy_should_free_list_and_zero_allocated_memory),
+        TESTCASE(dlist_ins_prev_should_insert_new_element_at_head_when_inserted_before_head),
         /* Mark the end of the array with an entry where the test
          * function is NULL */
         { NULL, NULL, NULL, NULL, MUNIT_TEST_OPTION_NONE, NULL }
