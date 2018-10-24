@@ -5,7 +5,11 @@
 #ifndef PKEALGORITHMS_DATA_STRUCTURES_H
 #define PKEALGORITHMS_DATA_STRUCTURES_H
 
-// interface for doubly linked list
+/****************************************************************************
+ *
+ * ------------------------------ dlist -------------------------------------
+ *
+ ****************************************************************************/
 
 typedef struct dlist_el {
     void            *data;
@@ -21,7 +25,7 @@ typedef struct dlist {
     dlist_el_t          *tail;
 } dlist_t;
 
-void dlist_init(dlist_t *list, void (*destory)(void *data));
+void dlist_init(dlist_t *list, void (*destroy)(void *data));
 
 void dlist_destroy(dlist_t *list);
 
@@ -46,5 +50,13 @@ int dlist_remove(dlist_t *list, dlist_el_t *element, void **data);
 #define dlist_next(element) ((element)->next)
 
 #define dlist_prev(element) ((element)->prev)
+
+
+/****************************************************************************
+ *
+ * ------------------------------ stack -------------------------------------
+ *
+ ****************************************************************************/
+
 
 #endif //PKEALGORITHMS_DATA_STRUCTURES_H

@@ -2,7 +2,7 @@
 
 namespace Pke.Algorithms.Geometry.Planar.Models
 {
-    public class ConvexHull : LinkedList<Coordinate>
+    public class ConvexHull : PkeStack<Coordinate>
     {
         public ConvexHull()
         {

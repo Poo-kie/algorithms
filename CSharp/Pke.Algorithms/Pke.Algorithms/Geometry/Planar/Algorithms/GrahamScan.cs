@@ -14,16 +14,16 @@ namespace Pke.Algorithms.Geometry.Planar.Algorithms
 
             var convexHull = new ConvexHull();
 
-            convexHull.AddFirst(preparedPoints[0]);
-            convexHull.AddFirst(preparedPoints[1]);
-            convexHull.AddFirst(preparedPoints[2]);
+            convexHull.Push(preparedPoints[0]);
+            convexHull.Push(preparedPoints[1]);
+            convexHull.Push(preparedPoints[2]);
 
             for (var i = 3; i < preparedPoints.Length; i ++)
             {
-                if (new CrossProduct(convexHull.First.Value, convexHull.First.Next.Value, preparedPoints[i]).ToDirection() != Direction.Left)
-                    convexHull.RemoveFirst();
+                if (new CrossProduct(convexHull.Top, convexHull.NextToTop, preparedPoints[i]).ToDirection() != Direction.Left)
+                    convexHull.Pop();
 
-                convexHull.AddFirst(preparedPoints[i]);    
+                convexHull.Push(preparedPoints[i]);    
             }
 
             return convexHull;
