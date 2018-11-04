@@ -7,6 +7,47 @@
 
 /****************************************************************************
  *
+ * ------------------------------ list --------------------------------------
+ *
+ ****************************************************************************/
+
+typedef struct list_el {
+    void            *data;
+    struct list_el  *next;
+} list_el_t;
+
+typedef struct list {
+    int             size;
+    int             (*match)(const void *key1, const void *key2);
+    void            (*destroy)(void *data);
+    list_el_t       *head;
+    list_el_t       *tail;
+} list_t;
+
+void list_init(list_t *list, void (*destroy)(void *data));
+
+void list_destroy(list_t *list);
+
+int list_ins_next(list_t *list, list_el_t *element, const void *data);
+
+int list_rem_next(list_t *list, list_el_t *element, void **data);
+
+#define list_size(list) ((list)->size)
+
+#define list_head(list) ((list)->head)
+
+#define list_tail(list) ((list)->tail)
+
+#define list_is_head(element) ((element)->prev == NULL ? 1 : 0)
+
+#define list_is_tail(element) ((element)->next == NULL ? 1 : 0)
+
+#define list_data(element) ((element)->data)
+
+#define list_next(element) ((element)->next)
+
+/****************************************************************************
+ *
  * ------------------------------ dlist -------------------------------------
  *
  ****************************************************************************/
@@ -57,6 +98,7 @@ int dlist_remove(dlist_t *list, dlist_el_t *element, void **data);
  * ------------------------------ stack -------------------------------------
  *
  ****************************************************************************/
+
 
 
 #endif //PKEALGORITHMS_DATA_STRUCTURES_H

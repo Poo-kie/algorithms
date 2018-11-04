@@ -31,6 +31,169 @@ void destroy(void *data) {
 // this file is going to get big.. but it's better than having to search through n files to find anything
 // and have those do includes to use macros and such.  just add new test cases from the top
 
+/****************************************************************************
+ *
+ * ------------------------------ list --------------------------------------
+ *
+ ****************************************************************************/
+
+static MunitResult list_rem_next_should_remove_element_after_head_when_next_element_is_head(const MunitParameter *params, void *fixture) {
+    list_t *list = (list_t *) malloc(sizeof(list_t));
+
+    list_init(list, destroy);
+
+    char *test = "test";
+    char *test2 = "test2";
+    char *test3 = "test3";
+
+    void *data;
+
+    list_ins_next(list, NULL, test);
+    list_ins_next(list, list_tail(list), test2);
+    list_ins_next(list, list_head(list), test3);
+
+    list_rem_next(list, list_head(list), &data);
+
+    munit_assert_int(list_size(list), ==, 2);
+
+    munit_assert_ptr(list->head->data, ==, test);
+    munit_assert_ptr(list->head->next->data, ==, list->tail->data);
+    munit_assert_string_equal(list_head(list)->data, "test");
+    munit_assert_string_equal(list_tail(list)->data, "test2");
+
+    return MUNIT_OK;
+}
+
+static MunitResult list_rem_next_should_remove_head_when_next_element_is_NULL(const MunitParameter params[], void *fixture) {
+    list_t *list = (list_t *) malloc(sizeof(list_t));
+
+    list_init(list, destroy);
+
+    char *test = "test";
+    void *data;
+
+    list_ins_next(list, NULL, test);
+    list_rem_next(list, NULL, &data);
+
+    munit_assert_true(list_head(list) == NULL);
+    munit_assert_true(list_tail(list) == NULL);
+    munit_assert_int(list->size, ==, 0);
+
+    free(list);
+
+    return MUNIT_OK;
+}
+
+static MunitResult list_ins_next_should_insert_new_element_between_head_and_tail_when_ins_after_current_head(const MunitParameter *params, void *fixture) {
+    list_t *list = (list_t *) malloc(sizeof(list_t));
+
+    list_init(list, destroy);
+
+    char *test = "test";
+    char *test2 = "test2";
+    char *test3 = "test3";
+
+    int retval1 = list_ins_next(list, NULL, test);
+    int retval2 = list_ins_next(list, list_tail(list), test2);
+    int retval3 = list_ins_next(list, list_head(list), test3);
+
+    munit_assert_int(retval1, ==, 0);
+    munit_assert_int(retval2, ==, 0);
+    munit_assert_int(retval3, ==, 0);
+
+    munit_assert_ptr(list->head->data, ==, test);
+    munit_assert_ptr(list->head->next->data, ==, test3);
+    munit_assert_ptr(list->tail->data, ==, test2);
+    munit_assert_string_equal(list_head(list)->data, "test");
+    munit_assert_string_equal(list_head(list)->next->data, "test3");
+    munit_assert_string_equal(list_tail(list)->data, "test2");
+
+    return MUNIT_OK;
+}
+
+static MunitResult list_ins_next_should_insert_new_element_at_tail_when_ins_after_current_tail(const MunitParameter params[], void *fixture) {
+    list_t *list = (list_t *) malloc(sizeof(list_t));
+
+    list_init(list, destroy);
+
+    char *test = "test";
+    char *test2 = "test2";
+
+    list_ins_next(list, NULL, test);
+    list_ins_next(list, list_tail(list), test2);
+
+    munit_assert_ptr(list->head->data, ==, test);
+    munit_assert_ptr(list->tail->data, ==, test2);
+    munit_assert_string_equal(list_head(list)->data, "test");
+    munit_assert_string_equal(list_tail(list)->data, "test2");
+
+    free(list);
+
+    return MUNIT_OK;
+}
+
+static MunitResult list_ins_next_should_insert_new_element_at_head_and_tail_for_empty_list(const MunitParameter params[], void *fixture) {
+    list_t *list = (list_t *) malloc(sizeof(list_t));
+
+    list_init(list, destroy);
+
+    char *test = "test";
+
+    list_ins_next(list, NULL, test);
+
+    munit_assert_ptr(list->head->data, ==, test);
+    munit_assert_ptr(list->tail->data, ==, test);
+    munit_assert_string_equal(list_head(list)->data, "test");
+    munit_assert_string_equal(list_tail(list)->data, "test");
+
+    free(list);
+
+    return MUNIT_OK;
+}
+
+static MunitResult list_destroy_should_free_list_and_zero_allocated_memory(
+        const MunitParameter *params, void *fixture) {
+    list_t *list = (list_t *) malloc(sizeof(list_t));
+
+    list_init(list, destroy);
+
+    char *test = "test";
+    char *test2 = "test2";
+    char *test3 = "test3";
+
+    list_ins_next(list, NULL, test);
+    list_ins_next(list, list_tail(list), test2);
+    list_ins_next(list, list_head(list), test3);
+
+    list_destroy(list);
+
+    int *freelist = (int *)list;
+    munit_assert_int(*freelist, ==, 0);
+
+    return MUNIT_OK;
+}
+
+static MunitResult list_init_should_initialize_list_with_expected_default_values(const MunitParameter params[], void *fixture) {
+    list_t *list = (list_t *) malloc(sizeof(list_t));
+
+    list_init(list, destroy);
+
+    munit_assert_int(list_size(list), ==, 0);
+    munit_assert_ptr(list->destroy, ==, destroy);
+    munit_assert_ptr(list->head, ==, NULL);
+    munit_assert_ptr(list->tail, ==, NULL);
+
+    free(list);
+
+    return MUNIT_OK;
+}
+
+/****************************************************************************
+ *
+ * ------------------------------ dlist -------------------------------------
+ *
+ ****************************************************************************/
+
 static MunitResult dlist_init_should_initialize_list_with_expected_default_values(const MunitParameter params[], void *fixture) {
     dlist_t *list = (dlist_t *) malloc(sizeof(dlist_t));
 
@@ -158,6 +321,13 @@ static MunitResult dlist_destroy_should_free_list_and_zero_allocated_memory(
 
 
 static MunitTest tests[] = {
+        TESTCASE(list_rem_next_should_remove_element_after_head_when_next_element_is_head),
+        TESTCASE(list_rem_next_should_remove_head_when_next_element_is_NULL),
+        TESTCASE(list_ins_next_should_insert_new_element_between_head_and_tail_when_ins_after_current_head),
+        TESTCASE(list_ins_next_should_insert_new_element_at_tail_when_ins_after_current_tail),
+        TESTCASE(list_ins_next_should_insert_new_element_at_head_and_tail_for_empty_list),
+        TESTCASE(list_destroy_should_free_list_and_zero_allocated_memory),
+        TESTCASE(list_init_should_initialize_list_with_expected_default_values),
         TESTCASE(dlist_init_should_initialize_list_with_expected_default_values),
         TESTCASE(dlist_ins_next_should_insert_new_element_at_head_and_tail_for_empty_list),
         TESTCASE(dlist_ins_next_should_insert_new_element_at_tail_when_ins_after_current_tail),
