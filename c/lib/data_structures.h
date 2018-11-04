@@ -11,40 +11,40 @@
  *
  ****************************************************************************/
 
-typedef struct list_el {
+typedef struct pke_list_el {
     void            *data;
-    struct list_el  *next;
-} list_el_t;
+    struct pke_list_el  *next;
+} pke_list_el_t;
 
-typedef struct list {
+typedef struct pke_list {
     int             size;
     int             (*match)(const void *key1, const void *key2);
     void            (*destroy)(void *data);
-    list_el_t       *head;
-    list_el_t       *tail;
-} list_t;
+    pke_list_el_t       *head;
+    pke_list_el_t       *tail;
+} pke_list_t;
 
-void list_init(list_t *list, void (*destroy)(void *data));
+void pke_list_init(pke_list_t *list, void (*destroy)(void *data));
 
-void list_destroy(list_t *list);
+void pke_list_destroy(pke_list_t *list);
 
-int list_ins_next(list_t *list, list_el_t *element, const void *data);
+int pke_list_ins_next(pke_list_t *list, pke_list_el_t *element, const void *data);
 
-int list_rem_next(list_t *list, list_el_t *element, void **data);
+int pke_list_rem_next(pke_list_t *list, pke_list_el_t *element, void **data);
 
-#define list_size(list) ((list)->size)
+#define pke_list_size(list) ((list)->size)
 
-#define list_head(list) ((list)->head)
+#define pke_list_head(list) ((list)->head)
 
-#define list_tail(list) ((list)->tail)
+#define pke_list_tail(list) ((list)->tail)
 
-#define list_is_head(element) ((element)->prev == NULL ? 1 : 0)
+#define pke_list_is_head(element) ((element)->prev == NULL ? 1 : 0)
 
-#define list_is_tail(element) ((element)->next == NULL ? 1 : 0)
+#define pke_list_is_tail(element) ((element)->next == NULL ? 1 : 0)
 
-#define list_data(element) ((element)->data)
+#define pke_list_data(element) ((element)->data)
 
-#define list_next(element) ((element)->next)
+#define pke_list_next(element) ((element)->next)
 
 /****************************************************************************
  *
@@ -99,6 +99,6 @@ int dlist_remove(dlist_t *list, dlist_el_t *element, void **data);
  *
  ****************************************************************************/
 
-
+typedef pke_list_t pke_stack_t;
 
 #endif //PKEALGORITHMS_DATA_STRUCTURES_H

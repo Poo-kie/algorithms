@@ -18,38 +18,38 @@
  * @param list
  * @param destroy
  */
-void list_init(list_t *list, void (*destroy)(void *data)) {
+void pke_list_init(pke_list_t *list, void (*destroy)(void *data)) {
     list->size = 0;
     list->destroy = destroy;
     list->head = NULL;
     list->tail = NULL;
 }
 
-void list_destroy(list_t *list) {
+void pke_list_destroy(pke_list_t *list) {
 
     void *data;
 
-    while (list_size(list) > 0) {
-        if (list_rem_next(list, NULL, &data) == 0 &&
+    while (pke_list_size(list) > 0) {
+        if (pke_list_rem_next(list, NULL, &data) == 0 &&
             list->destroy != NULL) {
 
             list->destroy(data);
         }
     }
 
-    memset(list, 0, sizeof(list_t));
+    memset(list, 0, sizeof(pke_list_t));
 }
 
-int list_ins_next(list_t *list, list_el_t *element, const void *data) {
+int pke_list_ins_next(pke_list_t *list, pke_list_el_t *element, const void *data) {
 
-    list_el_t *new_element;
+    pke_list_el_t *new_element;
 
-    if ((new_element = (list_el_t *)malloc(sizeof(list_el_t))) == NULL) return -1;
+    if ((new_element = (pke_list_el_t *)malloc(sizeof(pke_list_el_t))) == NULL) return -1;
 
     new_element->data = (void *)data;
 
     if (element == NULL) {
-        if (list_size(list) == 0) list->tail = new_element;
+        if (pke_list_size(list) == 0) list->tail = new_element;
 
         new_element->next = list->head;
         list->head = new_element;
@@ -66,17 +66,17 @@ int list_ins_next(list_t *list, list_el_t *element, const void *data) {
     return 0;
 }
 
-int list_rem_next(list_t *list, list_el_t *element, void **data) {
-    list_el_t *old_element;
+int pke_list_rem_next(pke_list_t *list, pke_list_el_t *element, void **data) {
+    pke_list_el_t *old_element;
 
-    if(list_size(list) == 0) return -1;
+    if(pke_list_size(list) == 0) return -1;
 
     if(element == NULL) {
         *data = list->head->data;
         old_element = list->head;
         list->head = list->head->next;
 
-        if (list_size(list) == 1) list->tail = NULL;
+        if (pke_list_size(list) == 1) list->tail = NULL;
     }
     else {
         if (element->next == NULL) return -1;
