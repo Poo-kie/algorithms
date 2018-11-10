@@ -224,16 +224,16 @@
 			<Option target="algorithm_tests"/>
 			<Option target="data_structure_tests"/>
 		</Unit>
-		<Unit filename="/Users/pookie/Projects/algorithms/c/lib/algorithms.c">
+		<Unit filename="/Users/pookie/Projects/algorithms/c/lib/algorithms/algorithms.c">
 			<Option target="pkealgorithms"/>
 		</Unit>
-		<Unit filename="/Users/pookie/Projects/algorithms/c/lib/algorithms.h">
+		<Unit filename="/Users/pookie/Projects/algorithms/c/lib/algorithms/algorithms.h">
 			<Option target="pkealgorithms"/>
 		</Unit>
-		<Unit filename="/Users/pookie/Projects/algorithms/c/lib/data_structures.c">
+		<Unit filename="/Users/pookie/Projects/algorithms/c/lib/data_structures/data_structures.c">
 			<Option target="pkealgorithms"/>
 		</Unit>
-		<Unit filename="/Users/pookie/Projects/algorithms/c/lib/data_structures.h">
+		<Unit filename="/Users/pookie/Projects/algorithms/c/lib/data_structures/data_structures.h">
 			<Option target="pkealgorithms"/>
 		</Unit>
 		<Unit filename="/Users/pookie/Projects/algorithms/c/CMakeLists.txt">

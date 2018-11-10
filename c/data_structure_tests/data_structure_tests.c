@@ -2,12 +2,8 @@
 // Created by pookie on 9/23/18.
 //
 
-//
-// Created by pookie on 9/1/18.
-//
-
 #include "../dependencies/munit/munit.h"
-#include "../lib/data_structures.h"
+#include "data_structures/data_structures.h"
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-parameter"
@@ -30,6 +26,33 @@ void destroy(void *data) {
 
 // this file is going to get big.. but it's better than having to search through n files to find anything
 // and have those do includes to use macros and such.  just add new test cases from the top
+
+/****************************************************************************
+ *
+ * ------------------------------ stack -------------------------------------
+ *
+ ****************************************************************************/
+
+static MunitResult pke_stack_push_should_add_element_to_top_of_stack(
+        const MunitParameter *params, void *fixture) {
+
+    pke_stack_t *stack = (pke_stack_t *) malloc(sizeof(pke_stack_t));
+
+    pke_stack_init(stack, destroy);
+
+    char *test = "test";
+    char *test2 = "test2";
+    char *test3 = "test3";
+
+    pke_stack_push(stack, test);
+    pke_stack_push(stack, test2);
+    pke_stack_push(stack, test3);
+
+    munit_assert_string_equal(pke_stack_top(stack), test3);
+    munit_assert_string_equal(pke_stack_next_to_top(stack), test2);
+
+    return MUNIT_OK;
+}
 
 /****************************************************************************
  *
@@ -327,6 +350,7 @@ static MunitResult dlist_destroy_should_free_list_and_zero_allocated_memory(
 
 
 static MunitTest tests[] = {
+        TESTCASE(pke_stack_push_should_add_element_to_top_of_stack),
         TESTCASE(pke_list_rem_next_should_remove_element_after_head_when_next_element_is_head),
         TESTCASE(pke_list_rem_next_should_remove_head_when_next_element_is_NULL),
         TESTCASE(pke_list_ins_next_should_insert_new_element_between_head_and_tail_when_ins_after_current_head),
