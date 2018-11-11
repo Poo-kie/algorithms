@@ -5,7 +5,7 @@
 #ifndef PKEALGORITHMS_GRAHAM_SCAN_H
 #define PKEALGORITHMS_GRAHAM_SCAN_H
 
-#include "data_structures/data_structures.h"
+#include "data_structures/pke_data_structures.h"
 
 pke_stack_t *graham_scan(coordinate_t **coordinates) {
 

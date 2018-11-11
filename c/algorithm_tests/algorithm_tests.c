@@ -3,7 +3,7 @@
 //
 
 #include "../dependencies/munit/munit.h"
-#include "algorithms/algorithms.h"
+#include "algorithms/pke_algorithms.h"
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-parameter"

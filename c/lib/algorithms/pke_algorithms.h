@@ -2,7 +2,7 @@
 #define PKE_ALGORITHMS_H
 
 #include <math.h>
-#include <data_structures/data_structures.h>
+#include <data_structures/pke_data_structures.h>
 
 // coordinate declarations and operations follow
 

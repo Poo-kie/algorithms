@@ -3,7 +3,7 @@
 //
 
 #include "../dependencies/munit/munit.h"
-#include "data_structures/data_structures.h"
+#include "data_structures/pke_data_structures.h"
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-parameter"
