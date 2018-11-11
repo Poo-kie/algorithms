@@ -1,12 +1,10 @@
 //
-// Created by pookie on 9/15/18.
+// Created by pookie on 11/11/18.
 //
 
 #include <stdlib.h>
-#include <string.h>
 
-#include "data_structures.h"
-
+#include "pke_stack.h"
 
 void pke_stack_init(pke_stack_t *stack, void (*destroy)(void *data)) {
     stack->head = NULL;
