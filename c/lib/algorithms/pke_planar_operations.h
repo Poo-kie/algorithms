@@ -6,6 +6,7 @@
 #define PKEALGORITHMS_PKE_PLANAR_OPERATIONS_H
 
 #include <math.h>
+#include <data_structures/pke_planar_objects.h>
 
 #define D_TOLERANCE 0.000001
 
@@ -21,5 +22,7 @@
 #define DOT_PRODUCT(vector1, vector2) (VECTOR_X(vector1) * VECTOR_X(vector2) + VECTOR_Y(vector1) * VECTOR_Y(vector2))
 
 #define D_EQUAL(d1, d2) (fabs(d1 - d2) < D_TOLERANCE ? 1 : 0)
+
+void swap_head_with_lowest_leftmost_coordinate(coordinate_t **coordinates, int length);
 
 #endif //PKEALGORITHMS_PKE_PLANAR_OPERATIONS_H

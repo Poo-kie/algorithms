@@ -7,8 +7,6 @@
 
 #include "data_structures/pke_data_structures.h"
 
-pke_stack_t *graham_scan(coordinate_t **coordinates) {
-
-}
+pke_stack_t *graham_scan(coordinate_t **coordinates);
 
 #endif //PKEALGORITHMS_GRAHAM_SCAN_H
